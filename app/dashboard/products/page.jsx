@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import Pagination from "@/app/ui/dashboard/pagination/pagination";
 
-const UsersPage = () => {
+const UsersPage = async () => {
   return (
     <div className={styles.container}>
       <div className={styles.top}>
