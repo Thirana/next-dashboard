@@ -5,6 +5,7 @@ import { connectToDB } from "./utils";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import bcrypt from "bcrypt";
+import { signIn } from "../auth";
 
 //Function to add new users to DB
 export const addUser = async (formData) => {
@@ -157,4 +158,14 @@ export const updateProduct = async (formData) => {
 
   revalidatePath("/dashboard/products");
   redirect("/dashboard/products");
+};
+
+export const authenticate = async (formData) => {
+  const { username, password } = Object.fromEntries(formData);
+
+  try {
+    await signIn("credentials", { username, password });
+  } catch (err) {
+    return "Wrong Credentials!";
+  }
 };
