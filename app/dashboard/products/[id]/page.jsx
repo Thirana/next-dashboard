@@ -1,27 +1,35 @@
+import { updateProduct } from "@/app/lib/action";
+import { fetchSingleProduct } from "@/app/lib/data";
 import styles from "@/app/ui/dashboard/products/singleProduct/singleProduct.module.css";
 import Image from "next/image";
 
-const SingleProductPage = () => {
+const SingleProductPage = async ({ params }) => {
+  const { id } = params;
+  const product = await fetchSingleProduct(id);
+
+  console.log(product);
+
   return (
     <div className={styles.container}>
       <div className={styles.infoContainer}>
         <div className={styles.imgContainer}>
-          <Image src="/noavatar.png" alt="" fill />
+          <Image src={product.img || "/noproduct.jpg"} alt="" fill />
         </div>
-        Thirana Ramuditha
+        {product.username}
       </div>
       <div className={styles.formContainer}>
-        <form action="" className={styles.form}>
+        <form action={updateProduct} className={styles.form}>
+          <input type="hidden" name="id" value={product.id} />
           <label>Title</label>
-          <input type="text" name="title" placeholder="Thirana" />
+          <input type="text" name="title" placeholder={product.title} />
           <label>Price</label>
-          <input type="number" name="price" placeholder="$100" />
+          <input type="number" name="price" placeholder={product.price} />
           <label>Stock</label>
-          <input type="number" name="number" placeholder="250" />
+          <input type="number" name="number" placeholder={product.stock} />
           <label>Color</label>
-          <input type="text" name="color" placeholder="red" />
+          <input type="text" name="color" placeholder={product.color} />
           <label>Size</label>
-          <textarea type="text" name="size" placeholder="Large" />
+          <textarea type="text" name="size" placeholder={product.size} />
           <label>Category</label>
           <select name="cat" id="cat">
             <option value="kitchen">Kitchen</option>
